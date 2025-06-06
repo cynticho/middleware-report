@@ -1,0 +1,103 @@
+server:
+  port: 7777
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  security:
+    oauth2:
+      client:
+        require-authorization-consent: true
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: client
+            client-secret: KZxvCSV3nZ73xLozpKCQQtgkAULH8fmd
+            scope:
+              - openid
+              - profile
+              - email
+
+        provider:
+          keycloak:
+            issuer-uri: https://auth-service-irn6.onrender.com/auth/realms/master
+
+
+  zipkin:
+    base-url: https://zipkin-service-wf5t.onrender.com
+
+  main:
+    web-application-type: servlet
+
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay=
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: agency-service
+          uri: lb://agency-service
+          predicates:
+            - Path=/agency/**
+
+        - id: automobile-service
+          uri: lb://automobile-service
+          predicates:
+            - Path=/automobile/**
+
+        - id: city-service
+          uri: lb://city-service
+          predicates:
+            - Path=/city/**
+
+        - id: eureka-server
+          uri: https://discovery-service-y0y3.onrender.com
+          predicates:
+            - Path=/eureka/**
+          filters:
+            - StripPrefix=1
+
+        - id: person-service
+          uri: lb://person-service
+          predicates:
+            - Path=/person/**
+
+        - id: employee-service
+          uri: lb://employee-service
+          predicates:
+            - Path=/employee/**
+
+        - id: salary-service
+          uri: lb://salary-service
+          predicates:
+            - Path=/salary/**
+
+        - id: admin-server
+          uri: lb://admin-server
+          predicates:
+            - Path=/admin/**
+
+        - id: resource-server
+          uri: lb://resource-server
+          predicates:
+            - Path=/resource/**
+
+        - id: zipkin
+          uri: https://zipkin-service-wf5t.onrender.com
+          predicates:
+            - Path=/zipkin/**
+
+        - id: config-service
+          uri: lb://config-service
+          predicates:
+            - Path=/config/**
+          filters:
+            - StripPrefix=1

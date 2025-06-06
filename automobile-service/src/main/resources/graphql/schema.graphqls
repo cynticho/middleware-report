@@ -1,0 +1,91 @@
+
+type Query{
+    getAll: [Category]
+    get(id: ID!): Category
+    count: Int!
+}
+
+input CategoryInput {
+    label: String!
+    description: String
+}
+
+type Category {
+    id: ID!
+    label: String!
+    description: String
+    createdAt: String!
+    products: [Product]
+}
+
+type Product {
+    id: Int!
+    label: String!
+    description: String
+    inPrice: Int!
+    outPrice: Int!
+    quantity: Int!
+    reorderLevel: Int!
+    expiration: String!
+    createdAt: String!
+    category: Category
+    orderDetails: [OrderDetail]
+    purchaseOrderDetails: [PurchaseOrderDetail]
+    suppliers: [Supplier]
+}
+
+type Mutation {
+    create(categoryInput: CategoryInput!): Category!
+    update(id: ID!, categoryInput: CategoryInput!): Category!
+    delete(id: ID!): Boolean!
+}
+
+type Order {
+    id: Int!
+    customer: String!
+    totalAmount: Int!
+    createdAt: String!
+    status: Status!
+    orderDetails: [OrderDetail]
+}
+
+type OrderDetail {
+    id: Int!
+    quantity: Int!
+    product: Product!
+    order: Order!
+    createdAt: String!
+}
+
+type PurchaseOrder {
+    id: Int!
+    totalAmount: Int!
+    status: Status!
+    createdAt: String!
+    purchaseOrderDetails: [PurchaseOrderDetail]
+}
+
+type PurchaseOrderDetail {
+    id: Int!
+    quantity: Int!
+    product: Product!
+    supplier: Supplier!
+    purchaseOrder: PurchaseOrder!
+}
+
+type Supplier {
+    id: Int!
+    name: String!
+    phone: String!
+    email: String!
+    location: String!
+    contactName: String!
+    createdAt: String!
+    purchaseOrderDetails: [PurchaseOrderDetail]
+    products: [Product]
+}
+
+enum Status {
+    PENDING
+    COMPLETED
+}

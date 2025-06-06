@@ -1,0 +1,27 @@
+
+server:
+  port: 1111
+
+spring:
+  eureka:
+    client:
+      service-url:
+        defaultZone: http://localhost:8761/eureka/
+      register-with-eureka: true
+      fetch-registry: true
+
+  application:
+    name: authorization-server
+  jpa:
+    defer-datasource-initialization: true
+  datasource:
+    username: sa
+    url: jdbc:h2:mem:customdb;DB_CLOSE_ON_EXIT=FALSE
+
+keycloak:
+  server:
+    contextPath: /auth
+    adminUser:
+      username: dicap
+      password: dicap
+    realmImportFile: baeldung-realm.json

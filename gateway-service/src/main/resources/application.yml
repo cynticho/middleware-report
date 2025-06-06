@@ -1,0 +1,126 @@
+server:
+  port: 7777
+
+spring:
+  security:
+    oauth2:
+      client:
+        require-authorization-consent: true
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: client
+            client-secret: JGHRzG2dUrcKL481MivuOiAu1TWXQvYp
+            scope:
+              - openid
+              - profile
+              - email
+
+        provider:
+          keycloak:
+            issuer-uri: https://auth-service-irn6.onrender.com/auth/realms/master
+
+
+  output:
+    ansi:
+      enabled: ALWAYS
+
+  application:
+    name: gateway
+  zipkin:
+    base-url: https://zipkin-service-wf5t.onrender.com
+
+  cloud:
+    gateway:
+      default-filters:
+        - TokenRelay=
+      routes:
+        - id: agency-service
+          uri: lb://agency-service
+          predicates:
+            - Path=/agency/**, /swagger-ui.html, /swagger-ui/**, /v3/api-docs
+
+        - id: automobile-service
+          uri: lb://automobile-service
+          predicates:
+            - Path=/automobile/**, /swagger-ui.html, /swagger-ui/**, /v3/api-docs
+
+        - id: city-service
+          uri: lb://city-service
+          predicates:
+            - Path=/city/**, /swagger-ui.html, /swagger-ui/**, /v3/api-docs
+
+        - id: eureka-server
+          uri: https://discovery-service-y0y3.onrender.com
+          predicates:
+            - Path=/eureka/**
+          filters:
+            - StripPrefix=1
+
+        - id: person-service
+          uri: lb://person-service
+          predicates:
+            - Path=/person/**, /swagger-ui.html, /swagger-ui/**, /v3/api-docs
+
+        - id: employee-service
+          uri: lb://employee-service
+          predicates:
+            - Path=/employee/**, /swagger-ui.html, /swagger-ui/**, /v3/api-docs
+
+        - id: salary-service
+          uri: lb://salary-service
+          predicates:
+            - Path=/salary/**, /swagger-ui.html, /swagger-ui/**, /v3/api-docs
+
+        - id: role-service
+          uri: lb://role-service
+          predicates:
+            - Path=/role/**, /swagger-ui.html, /swagger-ui/**, /v3/api-docs
+
+        - id: authorization-server
+          uri: lb://authorization-server
+          predicates:
+            - Path=/auth/**
+
+        - id: admin-server
+          uri: lb://admin-server
+          predicates:
+            - Path=/admin/**
+
+
+        - id: zipkin
+          uri: https://zipkin-service-wf5t.onrender.com
+          predicates:
+            - Path=/zipkin/**
+
+        - id: config-service
+          uri: lb://config-service
+          predicates:
+            - Path=/config/**
+          filters:
+            - StripPrefix=1
+
+eureka:
+  client:
+    service-url:
+      defaultZone: https://discovery-service-y0y3.onrender.com
+
+
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: agency service
+        url: https://agency-service-5req.onrender.com/v3/api-docs
+      - name: automobile Service
+        url: https://automobile-service.onrender.com/v3/api-docs
+      - name: city Service
+        url: https://city-service-9uoe.onrender.com/v3/api-docs
+      - name: employee Service
+        url: https://employee-service-lwr9.onrender.com/v3/api-docs
+      - name: person Service
+        url: http://server.dicap.lan:8082/v3/api-docs
+      - name: role Service
+        url: https://role-service-5zye.onrender.com/v3/api-docs
+      - name: salary Service
+        url: https://salary-service-ijzf.onrender.com/v3/api-docs
