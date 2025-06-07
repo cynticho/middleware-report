@@ -18,7 +18,7 @@ export function UserInfo() {
   const USER = {
     name: "Victor FONGANG",
     email: "victorfongangcyntiche@gmail.com",
-    img: "/images/user/user-03.png",
+    img: "/images/user/dicap.png",
   };
 
   return (

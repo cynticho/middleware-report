@@ -10,7 +10,7 @@ import { SocialAccounts } from "./_components/social-accounts";
 export default function Page() {
   const [data, setData] = useState({
     name: "Victor C. FONGANG",
-    profilePhoto: "/images/user/user-03.png",
+    profilePhoto: "/images/user/dicap.png",
     coverPhoto: "/images/cover/cover-01.png",
   });
 
@@ -137,11 +137,9 @@ export default function Page() {
                 About Me
               </h4>
               <p className="mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Pellentesque posuere fermentum urna, eu condimentum mauris
-                tempus ut. Donec fermentum blandit aliquet. Etiam dictum dapibus
-                ultricies. Sed vel aliquet libero. Nunc a augue fermentum,
-                pharetra ligula sed, aliquam lacus.
+                Vicor C. FONGANG, devsecops engineer, +4 experiences, back-end experience: Laravel, Sping-boot, express and others
+                front-end experience: nextjs, angular, python
+                system and database administration
               </p>
             </div>
 

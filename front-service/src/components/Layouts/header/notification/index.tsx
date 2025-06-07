@@ -14,27 +14,27 @@ import { BellIcon } from "./icons";
 
 const notificationList = [
   {
-    image: "/images/user/user-15.png",
+    image: "/images/user/dicap.png",
     title: "Victor Joined the Team!",
     subTitle: "Congratulate him",
   },
   {
-    image: "/images/user/user-03.png",
+    image: "/images/user/mhd.png",
     title: "New message",
     subTitle: "Mohammed sent a new message",
   },
   {
-    image: "/images/user/user-26.png",
+    image: "/images/user/dicap.png",
     title: "New Salary received",
     subTitle: "Check your earnings",
   },
   {
-    image: "/images/user/user-28.png",
+    image: "/images/user/marcelle.png",
     title: "Marcelle completed tasks",
     subTitle: "Assign new task",
   },
   {
-    image: "/images/user/user-27.png",
+    image: "/images/user/asaph.png",
     title: "Asaph Joined the Team!",
     subTitle: "Congratulate him",
   },
