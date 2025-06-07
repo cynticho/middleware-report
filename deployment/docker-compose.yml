@@ -1,0 +1,153 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ../front-service 
+      args:
+        SCRIPT_TO_RUN: build 
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    entrypoint: ["nginx", "-g", "daemon off;"]
+    depends_on:
+      - gateway
+    networks:
+      - backend
+      
+  postgres:
+    image: postgres:15
+    container_name: pos
+    environment:
+      POSTGRES_DB: postgres-db
+      POSTGRES_USER: springboot
+      POSTGRES_PASSWORD: springboot
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-user-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  discovery-server:
+    build:
+      context: ../discovery-service
+    container_name: discovery-server
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - backend
+
+  config-server:
+    build:
+      context: ../config-service
+    container_name: config-service
+    ports:
+      - "8888:8888"
+    depends_on:
+      - discovery-server
+    networks:
+      - backend
+
+  gateway:
+    build:
+      context: ../gateway-service
+    container_name: gateway
+    depends_on:
+      - config-server
+    ports:
+      - "8081:8081"
+    networks:
+      - backend
+
+  admin-service:
+    build:
+      context: ../admin-service
+    container_name: admin-service
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  agency-service:
+    build:
+      context: ../agency-service
+    container_name: agency-service
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  auth-service:
+    build:
+      context: ../auth-service
+    container_name: auth-service
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  automobile-service:
+    build:
+      context: ../automobile-service
+    container_name: automobile-service
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  city-service:
+    build:
+      context: ../city-service
+    container_name: city-service
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  employee-service:
+    build:
+      context: ../employee-service
+    container_name: employee-service
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  person-service:
+    build:
+      context: ../person-service
+    container_name: person-service
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  role-service:
+    build:
+      context: ../role-service
+    container_name: role-service
+    depends_on:
+      - postgres
+    networks:
+      - backend
+  
+  salary-service:
+    build:
+      context: ../salary-service
+    container_name: salary-service
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  
+
+volumes:
+  postgres-user-data:
+
+networks:
+  backend:
+    driver: bridge
